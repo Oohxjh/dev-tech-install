@@ -61,6 +61,21 @@ if command -v docker &> /dev/null; then
     fi
 fi
 
+# 下载并安装docker-compose-plugin
+info "下载docker-compose-plugin..."
+# 阿里云镜像站没有docker-compose-plugin包，使用Docker官方镜像站
+wget https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-compose-plugin-2.27.1-1.el7.x86_64.rpm -O /tmp/docker-compose-plugin-2.27.1-1.el7.x86_64.rpm
+
+if [ $? -eq 0 ] && [ -s /tmp/docker-compose-plugin-2.27.1-1.el7.x86_64.rpm ]; then
+    info "安装docker-compose-plugin..."
+    rpm -ivh /tmp/docker-compose-plugin-2.27.1-1.el7.x86_64.rpm
+    if [ $? -ne 0 ]; then
+        error "docker-compose-plugin安装失败。如果提示 'docker-compose-plugin-2.27.1-1.el7.x86_64: [Errno 256] No more mirrors to try'，请手动下载并安装：\n下载页面：https://download.docker.com/linux/centos/7/x86_64/stable/Packages/\n下载地址：https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-compose-plugin-2.27.1-1.el7.x86_64.rpm\n下载后上传到服务器，然后执行：rpm -ivh 软件包名"
+    fi
+else
+    error "docker-compose-plugin下载失败。请手动下载并安装：\n下载页面：https://download.docker.com/linux/centos/7/x86_64/stable/Packages/\n下载地址：https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-compose-plugin-2.27.1-1.el7.x86_64.rpm\n下载后上传到服务器，然后执行：rpm -ivh 软件包名"
+fi
+
 # 更新系统包
 info "更新系统包..."
 yum update -y || error "系统更新失败"
