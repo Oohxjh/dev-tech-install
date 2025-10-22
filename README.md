@@ -1,101 +1,133 @@
-# Docker 环境配置 + 软件（一键安装）
+# Docker 环境配置 + 软件（一键安装）- Ubuntu 适配版
 
-作者：小傅哥
-<br/>博客：[https://bugstack.cn](https://bugstack.cn)
+> **本仓库基于小傅哥的原始项目进行 Ubuntu 系统适配**  
+> 原作者：小傅哥  
+> 原项目地址：[https://github.com/fuzhengwei/xfg-dev-tech-docker-install](https://github.com/fuzhengwei/xfg-dev-tech-docker-install)  
+> 博客：[https://bugstack.cn](https://bugstack.cn)
+
+**适配者：Oohxjh**  
+**适配内容：** 在保留原有 CentOS 版本的基础上，新增 Ubuntu 系统的完整支持
+
+---
+
+## 📢 版本说明
+
+本仓库是对小傅哥原始项目的**定制化扩展版本**，主要改动：
+
+✅ **新增 Ubuntu 支持** - 创建 `install_docker_ubuntu.sh` 和 `run_install_docker_ubuntu.sh`  
+✅ **保留 CentOS 版本** - 原有脚本完全不变，CentOS 用户可继续使用  
+✅ **双系统兼容** - 同一仓库支持 CentOS 和 Ubuntu 两种系统  
+✅ **镜像加速优化** - 保留国内镜像加速配置，海外服务器自动回退官方源
+
+**感谢小傅哥的开源贡献！** 🙏
 
 > 沉淀、分享、成长，让自己和他人都能有所收获！😄
 
-大家好，我是技术UP主小傅哥。
+## 📖 项目简介
 
-说实话，做项目不上线，等于吃面不配蒜🧄，效果少一半！面试官也说：“所有做Java编程项目，没有上线云服务器的，一律当玩具看！” 是呀，做完项目不上线，是不你做的项目没法运行，是个小卡拉米练手的？🤔 那怎么办？
+本项目提供了一套完整的 Docker 开发环境自动化部署脚本，支持 **Ubuntu** 和 **CentOS** 双系统。通过简单的命令即可在云服务器或本地虚拟机上快速搭建 Docker 环境，包括 Docker CE、Docker Compose 以及常用的开发软件栈（MySQL、Redis、RabbitMQ 等）。
 
-其实，上线云服务器非常非常简单，而且云服务器价格也非常非常便宜！趁618活动月，**28块钱**，都能买一年的云服务器☁️，干嘛不上车！
-
-<div align="center">
-    <img src="https://bugstack.cn/images/system/zsxq/xingqiu-231018-00.png" width="200px">
-</div>
-
-**啥是云服务器？**
-
-云服务器，就等同于自己的另外一个电脑💻，在另外一台电脑部署 redis、mysql、mq等，本地电脑连接过去使用。尤其是 Windows 电脑用户，真心建议搞个云服务器，否则你会浪费非常多的时间这套 Windows 适配问题。
-
-<div align="center">
-    <img src="https://bugstack.cn/images/roadmap/tutorial/road-map-docker-install-06.png" width="650px">
-</div>
-
-这样有了云服务器，就可以不用嚯嚯本地电脑了，安装了卸，卸了安装，把自己本机电脑环境弄的乱码起糟，全是费时费力的事。有这精力，不如用一台云服务器部署环境，开发完成项目后，再上线云服务器。既节省本地电脑资源，又锻炼了云服务器操作，起步一举两得！
-
-<div align="center">
-    <img src="https://bugstack.cn/images/roadmap/tutorial/road-map-docker-idea-00.png" width="150px">
-</div>
-
-不过，放心！别担心你不会用云服务器，因为小傅哥已经给你准备了一件安装云服务器环境的脚本，和各类部署环境和构建项目的视频。**即使是小卡拉米，也能跟着学习下来。**
-
-> 🧧小傅哥还提供了非常多的编程实战项目，包括；业务的、组件的、AI的、源码的、轮子的，可以关注公众号「bugstack虫洞栈」回复「星球」加入。
+**适用场景：**
+- 🚀 快速搭建开发测试环境
+- 🐳 容器化应用部署
+- 📦 微服务架构开发
+- 🎓 Docker 学习实践
 
 ## 🌱 目录
 
-- 一、优惠云服务器地址
+- 一、快速开始（Ubuntu / CentOS 双系统支持）
 - 二、一键部署脚本
    1. 脚本权限设置
    2. JDK 安装脚本
-   3. Docker 安装脚本
-   4. 软件安装脚本
-   5. 常见问题
-   6. 执行顺序建议
+   3. Docker 安装脚本（CentOS 版本）
+   4. Docker 安装脚本（Ubuntu 版本）🆕
+   5. 软件安装脚本
+   6. 常见问题
+   7. 执行顺序建议
 
-## 一、优惠云服务器地址
+## 一、快速开始（Ubuntu / CentOS 双系统支持）
 
-<div align="center">
-    <img src="https://bugstack.cn/images/roadmap/tutorial/road-map-docker-install-01.png" width="400px">
-</div>
+### 🎯 根据您的系统选择对应的脚本
 
-- 购买地址：[https://618.gaga.plus](https://618.gaga.plus)
-- 购买地址：[https://618.gaga.plus](https://618.gaga.plus)
-- 购买地址：[https://618.gaga.plus](https://618.gaga.plus)
+#### Ubuntu 用户（推荐 Ubuntu 22.04 LTS）
 
-**我适合买哪个服务器？**
+```bash
+# 1. 克隆仓库
+git clone https://github.com/Oohxjh/xfg-dev-tech-docker-install.git
+cd xfg-dev-tech-docker-install
 
-- 2c2g 1年，28￥，可部署一套 docker、mysql、redis、SpringBoot 单体项目，用于替代本地电脑的环境部署。
-- 2c4g 1年（非常推荐3年），109￥，可部署一套 docker、mysql、redis、rabbitmq、xxl-job、SpringBoot 分布式微服务项目。 
-- 2c8g 1年，328￥，适合部署小傅哥星球社群[大部分项目](https://bugstack.cn/md/zsxq/material/student-learn-advanced.html)，可以完成多个微服务项目部署。
+# 2. 添加执行权限
+chmod +x run_install_docker_ubuntu.sh
+chmod +x install_docker_ubuntu.sh
 
-注意📢：购买选择系统时，推荐系统镜像，**centos 7.9** SSH 链接工具：[SSH Tool](https://bugstack.cn/md/road-map/tool.html)
+# 3. 执行安装
+./run_install_docker_ubuntu.sh
+```
 
->如果自己账号不是新人身份，可以自己注册个新账号，用家里人JD扫码认证一下即可。
+#### CentOS 用户（CentOS 7.9）
 
-🎁 礼物赠送，购买2c4g 3年的，赠送Joy公仔，邮寄到家！购买后，联系小傅哥（微信：`fustack`）
+```bash
+# 1. 克隆仓库
+git clone https://github.com/Oohxjh/xfg-dev-tech-docker-install.git
+cd xfg-dev-tech-docker-install
+
+# 2. 添加执行权限
+chmod +x run_install_docker_local.sh
+chmod +x install_docker.sh
+
+# 3. 执行安装
+./run_install_docker_local.sh
+```
+
+### 📋 系统支持
+
+| 系统类型 | 支持版本 | 脚本文件 | 状态 |
+|---------|---------|---------|------|
+| **Ubuntu** | 24.04 / 22.04 / 20.04 LTS | `run_install_docker_ubuntu.sh` | ✅ 已支持 |
+| **CentOS** | 7.9 | `run_install_docker_local.sh` | ✅ 已支持 |
+
+---
 
 ## 二、一键部署脚本
 
-小傅哥，这里为你准备一键安装 Docker 环境的脚本文件，你可以非常省心的完成 Docker 部署。使用方式如下。
+这里为你准备一键安装 Docker 环境的脚本文件，你可以非常省心的完成 Docker 部署。使用方式如下。
 
 <div align="center">
     <img src="https://bugstack.cn/images/roadmap/tutorial/road-map-docker-install-02.png" width="650px">
 </div>
 
-- **地址**：<https://github.com/fuzhengwei/xfg-dev-tech-docker-install>
-- **地址**：<https://gitcode.com/Yao__Shun__Yu/xfg-dev-tech-docker-install>
+**仓库地址：**
+- **本仓库（Ubuntu 适配版）**：<https://github.com/Oohxjh/xfg-dev-tech-docker-install>
+- **原始仓库（CentOS 版本）**：<https://github.com/fuzhengwei/xfg-dev-tech-docker-install>
+- **原 Gitcode 镜像**：<https://gitcode.com/Yao__Shun__Yu/xfg-dev-tech-docker-install>
 
-本文档介绍如何执行项目中的各个脚本，包括权限设置和执行步骤。操作视频：[https://www.bilibili.com/video/BV1oaNazEEf5](https://www.bilibili.com/video/BV1oaNazEEf5)
+本文档介绍如何执行项目中的各个脚本，包括权限设置和执行步骤。
+
+**参考资料：**
+- 操作视频（原始版本）：[https://www.bilibili.com/video/BV1oaNazEEf5](https://www.bilibili.com/video/BV1oaNazEEf5)
 
 ### 1. 脚本权限设置
 
 在执行任何脚本之前，需要先为脚本文件添加可执行权限：
 
-```
-# 为所有脚本添加可执行权限
+```bash
+# CentOS 版本脚本
 chmod +x environment/jdk/install-java.sh
 chmod +x environment/jdk/remove-java.sh
 chmod +x run_install_docker_local.sh
+chmod +x install_docker.sh
 chmod +x run_install_software.sh
-chmod +x install-maven.sh
-chmod +x remove-maven.sh
+chmod +x environment/maven/install-maven.sh
+chmod +x environment/maven/remove-maven.sh
 
+# Ubuntu 版本脚本 🆕
+chmod +x run_install_docker_ubuntu.sh
+chmod +x install_docker_ubuntu.sh
 ```
+
 或者一次性为所有脚本添加权限：
 
-```
+```bash
 find . -name "*.sh" -type f -exec chmod +x {} \;
 ```
 
@@ -206,26 +238,76 @@ sudo ./environment/jdk/remove-maven.sh -f
 sudo ./environment/jdk/remove-maven -f -q
 ```
 
-### 3. Docker 安装脚本
+### 3. Docker 安装脚本（CentOS 版本）
 
-脚本位置： run_install_docker_local.sh
+**脚本位置：** `run_install_docker_local.sh`
 
-功能： 使用本地的 install_docker.sh 脚本安装 Docker
+**功能：** 使用本地的 `install_docker.sh` 脚本安装 Docker（适用于 CentOS 7.9）
 
-执行方式：
+**执行方式：**
 
-```
-# 执行 Docker 安装
+```bash
+# 执行 Docker 安装（CentOS）
 ./run_install_docker_local.sh
 ```
-注意事项：
 
-- 脚本会自动检查 install_docker.sh 文件是否存在
+**注意事项：**
+
+- 脚本会自动检查 `install_docker.sh` 文件是否存在
 - 如果需要 root 权限会自动请求
 - 安装完成后会询问是否安装 Portainer 容器管理界面
 - Portainer 访问地址： http://服务器IP:9000
+- **仅支持 CentOS 系统**，使用 yum 包管理器
 
-### 4. 软件安装脚本
+---
+
+### 4. Docker 安装脚本（Ubuntu 版本）🆕
+
+**脚本位置：** `run_install_docker_ubuntu.sh`
+
+**功能：** 使用本地的 `install_docker_ubuntu.sh` 脚本安装 Docker（适用于 Ubuntu）
+
+**执行方式：**
+
+```bash
+# 执行 Docker 安装（Ubuntu）
+./run_install_docker_ubuntu.sh
+```
+
+**支持的 Ubuntu 版本：**
+- Ubuntu 24.04 LTS (Noble)
+- Ubuntu 22.04 LTS (Jammy) ✅ **推荐**
+- Ubuntu 20.04 LTS (Focal)
+- Ubuntu 18.04 LTS (Bionic)
+
+**安装内容：**
+- Docker CE（Community Edition）
+- Docker CLI
+- containerd.io
+- Docker Buildx Plugin
+- Docker Compose Plugin（官方插件，`docker compose` 命令）
+- Docker Compose 独立版本（兼容版，`docker-compose` 命令）
+
+**特色功能：**
+- ✅ 自动检测系统是否为 Ubuntu
+- ✅ 使用阿里云镜像源加速下载
+- ✅ 添加 GPG 密钥验证
+- ✅ 自动配置 Docker 镜像加速（国内优化）
+- ✅ 完整的卸载清理功能
+- ✅ 运行 hello-world 验证安装
+- ✅ 可选安装 Portainer Web 管理界面
+
+**注意事项：**
+
+- 脚本会自动检查 `install_docker_ubuntu.sh` 文件是否存在
+- 如果需要 root 权限会自动请求
+- 使用 apt 包管理器（Ubuntu 专用）
+- 安装完成后会询问是否安装 Portainer 容器管理界面
+- Portainer 访问地址： http://服务器IP:9000
+
+---
+
+### 5. 软件安装脚本
 
 脚本位置： run_install_software.sh
 
@@ -263,65 +345,106 @@ sudo ./run_install_software.sh
 - 支持选择原始配置或阿里云镜像配置
 - 可以多选软件进行批量安装
 
-### 5. 常见问题
+### 6. 常见问题
 
-#### 5.1 权限问题
+#### 6.1 权限问题
 
 如果遇到权限拒绝错误：
 
-```
+```bash
 # 确保脚本有执行权限
 ls -la *.sh
 # 如果没有 x 权限，重新添加
 chmod +x script_name.sh
 ```
 
-#### 5.2 环境变量生效
+#### 6.2 环境变量生效
 
 JDK 安装后，环境变量在当前会话中已生效，新开终端需要：
 
-```
+```bash
 # 重新加载配置
 source /etc/profile
 # 或者重新登录
 ```
 
-#### 5.3 Docker 相关
+#### 6.3 Docker 相关
 
 确保 Docker 服务正在运行：
 
-```
+```bash
 # 检查 Docker 状态
 sudo systemctl status docker
 # 启动 Docker 服务
 sudo systemctl start docker
 ```
 
-### 6. 执行顺序建议
+#### 6.4 系统选择问题
 
-1. 首先安装 JDK （如果需要）：
+**问：我应该选择 Ubuntu 还是 CentOS？**
 
-   ```
-   sudo ./environment/jdk/install-java.sh -v 8
-   ```
-   
-2. 然后安装 Docker ：
+- **Ubuntu 22.04 LTS** - 推荐现代云原生应用、容器化环境、快速开发
+- **CentOS 7.9** - 推荐企业级应用、传统架构、长期稳定性需求
 
-   ```
-   ./run_install_docker_local.sh
-   ```
+**问：我的系统是 Debian，可以用 Ubuntu 脚本吗？**
 
-3. 然后安装 Docker ：
+可以尝试，但建议手动验证。Debian 和 Ubuntu 都使用 apt，理论上兼容。
 
-   ```
-   ./install-maven.sh
-   ```
-   
-4. 最后安装开发软件 ：
+---
 
-   ```
-   sudo ./run_install_software.sh
-   ```
-   按照以上步骤，您就可以成功执行所有脚本并搭建完整的开发环境。
+### 7. 执行顺序建议
+
+#### 🐧 Ubuntu 系统安装顺序
+
+```bash
+# 1. 安装 JDK（如果需要）
+sudo ./environment/jdk/install-java.sh -v 8
+
+# 2. 安装 Docker（Ubuntu 版本）
+./run_install_docker_ubuntu.sh
+
+# 3. 安装 Maven（如果需要）
+sudo ./environment/maven/install-maven.sh
+
+# 4. 安装开发软件
+sudo ./run_install_software.sh
+```
+
+#### 🔴 CentOS 系统安装顺序
+
+```bash
+# 1. 安装 JDK（如果需要）
+sudo ./environment/jdk/install-java.sh -v 8
+
+# 2. 安装 Docker（CentOS 版本）
+./run_install_docker_local.sh
+
+# 3. 安装 Maven（如果需要）
+sudo ./environment/maven/install-maven.sh
+
+# 4. 安装开发软件
+sudo ./run_install_software.sh
+```
+
+#### 📝 说明
+
+- **JDK** - 如果只需要 Docker 环境可跳过
+- **Maven** - 如果只需要 Docker 环境可跳过
+- **Docker** - 核心组件，必须安装
+- **开发软件** - 根据需要选择安装（MySQL、Redis、RabbitMQ 等）
+
+按照以上步骤，您就可以成功执行所有脚本并搭建完整的开发环境。
+
+---
+
+## 📄 许可证
+
+本项目基于原作者小傅哥的开源项目进行 Ubuntu 适配，遵循原项目的开源协议。
+
+**原始项目：** [xfg-dev-tech-docker-install](https://github.com/fuzhengwei/xfg-dev-tech-docker-install)
+
+**适配版本：** [xfg-dev-tech-docker-install (Ubuntu适配)](https://github.com/Oohxjh/xfg-dev-tech-docker-install)
+
+感谢小傅哥的开源贡献！❤️
 
 
