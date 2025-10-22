@@ -53,8 +53,8 @@
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/Oohxjh/xfg-dev-tech-docker-install.git
-cd xfg-dev-tech-docker-install
+git clone https://github.com/Oohxjh/dev-tech-install.git
+cd dev-tech-install
 
 # 2. 添加执行权限
 chmod +x run_install_docker_ubuntu.sh
@@ -68,8 +68,8 @@ chmod +x install_docker_ubuntu.sh
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/Oohxjh/xfg-dev-tech-docker-install.git
-cd xfg-dev-tech-docker-install
+git clone https://github.com/Oohxjh/dev-tech-install.git
+cd dev-tech-install
 
 # 2. 添加执行权限
 chmod +x run_install_docker_local.sh

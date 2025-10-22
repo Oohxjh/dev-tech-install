@@ -68,11 +68,18 @@ if [ $? -eq 0 ]; then
     if [[ "$INSTALL_PORTAINER" =~ ^[Yy]$ ]]; then
         info "开始安装 Portainer CE (Community Edition) LTS 版本..."
         
+        # 检测当前用户是否有 docker 权限
+        DOCKER_CMD="docker"
+        if ! docker ps &> /dev/null; then
+            warning "当前用户没有 docker 权限，将使用 sudo 运行"
+            DOCKER_CMD="sudo docker"
+        fi
+        
         # 创建 Portainer 数据卷
-        docker volume create portainer_data
+        $DOCKER_CMD volume create portainer_data
         
         # 安装 Portainer CE (使用官方最新 LTS 镜像)
-        docker run -d \
+        $DOCKER_CMD run -d \
             -p 8000:8000 \
             -p 9443:9443 \
             --name portainer \
@@ -113,9 +120,9 @@ if [ $? -eq 0 ]; then
             info "提示：如需使用 HTTP（端口 9000），请手动修改容器配置"
         else
             warning "Portainer 安装失败，请手动安装或检查 Docker 状态"
-            echo "手动安装命令："
-            echo "  docker volume create portainer_data"
-            echo "  docker run -d -p 8000:8000 -p 9443:9443 --name portainer \\"
+            echo "手动安装命令（如果当前用户没有 docker 权限，请在命令前加 sudo）："
+            echo "  ${DOCKER_CMD} volume create portainer_data"
+            echo "  ${DOCKER_CMD} run -d -p 8000:8000 -p 9443:9443 --name portainer \\"
             echo "    --restart=always \\"
             echo "    -v /var/run/docker.sock:/var/run/docker.sock \\"
             echo "    -v portainer_data:/data \\"
@@ -123,7 +130,7 @@ if [ $? -eq 0 ]; then
         fi
     else
         info "跳过 Portainer 安装"
-        info "如需后续安装，请运行："
+        info "如需后续安装，请运行（如果当前用户没有 docker 权限，请在命令前加 sudo）："
         echo "  docker volume create portainer_data"
         echo "  docker run -d -p 8000:8000 -p 9443:9443 --name portainer \\"
         echo "    --restart=always \\"

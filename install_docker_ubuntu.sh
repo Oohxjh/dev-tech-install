@@ -150,6 +150,19 @@ systemctl start docker || error "Docker服务启动失败"
 info "设置Docker开机自启..."
 systemctl enable docker || error "设置Docker开机自启失败"
 
+# 将当前用户添加到docker组（允许非root用户运行docker命令）
+info "配置用户权限..."
+# 获取实际运行脚本的用户（即使使用sudo，也获取真实用户）
+REAL_USER=${SUDO_USER:-$(whoami)}
+if [ "$REAL_USER" != "root" ]; then
+    info "将用户 $REAL_USER 添加到 docker 组..."
+    usermod -aG docker "$REAL_USER" || warning "添加用户到 docker 组失败"
+    info "✅ 用户 $REAL_USER 已添加到 docker 组"
+    info "⚠️  请注意：需要重新登录或运行 'newgrp docker' 才能生效"
+else
+    info "当前为 root 用户，跳过用户组配置"
+fi
+
 # 配置Docker镜像加速
 info "配置 Docker 镜像加速（国内服务器优化）..."
 info "说明：海外服务器可跳过此步骤，Docker 会自动使用官方源"
